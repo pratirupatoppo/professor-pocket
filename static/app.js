@@ -2,9 +2,6 @@ const form = document.querySelector("#chat-form");
 const input = document.querySelector("#question");
 const conversation = document.querySelector("#conversation");
 const submitButton = form.querySelector("button[type='submit']");
-const soundToggle = document.querySelector("#sound-toggle");
-let audioContext;
-let soundEnabled = true;
 const funFacts = [
   ["Make your people", "The best friendships can start with a shared class, a residence corridor, or a simple “want to grab food?”"],
   ["The syllabus side quest", "A college day can begin with one planned class and somehow unlock three unexpected conversations."],
@@ -26,44 +23,6 @@ const funFacts = [
   ["Main-character moment", "College is part classroom, part community, and part figuring things out as you go."]
 ];
 let funFactIndex = 0;
-
-function enableSound() {
-  if (!audioContext) {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return false;
-    audioContext = new AudioContext();
-  }
-  if (audioContext.state === "suspended") audioContext.resume();
-  return true;
-}
-
-function playSound(frequencies, duration = 0.1) {
-  if (!soundEnabled || !enableSound()) return;
-  const oscillator = audioContext.createOscillator();
-  const gain = audioContext.createGain();
-  oscillator.type = "square";
-  oscillator.frequency.setValueAtTime(frequencies[0], audioContext.currentTime);
-  frequencies.slice(1).forEach((frequency, index) => {
-    oscillator.frequency.setValueAtTime(
-      frequency,
-      audioContext.currentTime + (duration / frequencies.length) * (index + 1),
-    );
-  });
-  gain.gain.setValueAtTime(0.2, audioContext.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
-  oscillator.connect(gain);
-  gain.connect(audioContext.destination);
-  oscillator.start();
-  oscillator.stop(audioContext.currentTime + duration);
-}
-
-soundToggle.addEventListener("click", () => {
-  soundEnabled = !soundEnabled;
-  if (soundEnabled) enableSound();
-  soundToggle.textContent = soundEnabled ? "🔊 SOUND ON" : "🔇 SOUND OFF";
-  soundToggle.setAttribute("aria-pressed", String(soundEnabled));
-  if (soundEnabled) playSound([587, 784], 0.12);
-});
 
 const animatedSections = document.querySelectorAll(".hero-copy, .hero-art, .chat-card, .specs-copy, .spec-grid, .fun-card");
 animatedSections.forEach((element) => element.classList.add("reveal"));
@@ -112,7 +71,6 @@ form.addEventListener("submit", async (event) => {
   const question = input.value.trim();
   if (!question) return;
   addMessage(question, "user");
-  playSound([440, 660], 0.12);
   input.value = "";
   submitButton.disabled = true;
   submitButton.textContent = "THINKING...";
@@ -126,11 +84,9 @@ form.addEventListener("submit", async (event) => {
     const payload = await response.json();
     conversation.lastElementChild.remove();
     addMessage(payload.answer || payload.error || "The assistant could not answer.", "assistant");
-    playSound([660, 880], 0.16);
   } catch (error) {
     conversation.lastElementChild.remove();
     addMessage("The chatbot service could not be reached. Check the Flask server.", "assistant");
-    playSound([330, 220], 0.18);
   } finally {
     submitButton.disabled = false;
     submitButton.textContent = "ASK ⚡";
