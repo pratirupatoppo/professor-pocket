@@ -36,6 +36,12 @@ function playSound(frequencies, duration = 0.1) {
   oscillator.stop(audioContext.currentTime + duration);
 }
 
+document.querySelectorAll("button").forEach((button) => {
+  if (button !== soundToggle) {
+    button.addEventListener("click", () => playSound([520, 700], 0.07));
+  }
+});
+
 soundToggle.addEventListener("click", () => {
   soundEnabled = !soundEnabled;
   if (soundEnabled) enableSound();
@@ -43,6 +49,18 @@ soundToggle.addEventListener("click", () => {
   soundToggle.setAttribute("aria-pressed", String(soundEnabled));
   if (soundEnabled) playSound([587, 784], 0.12);
 });
+
+const animatedSections = document.querySelectorAll(".hero-copy, .hero-art, .chat-card, .specs-copy, .spec-grid, .fun-card");
+animatedSections.forEach((element) => element.classList.add("reveal"));
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("revealed");
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+animatedSections.forEach((element) => revealObserver.observe(element));
 
 function addMessage(text, kind) {
   const message = document.createElement("div");
