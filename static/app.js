@@ -2,10 +2,22 @@ const form = document.querySelector("#chat-form");
 const input = document.querySelector("#question");
 const conversation = document.querySelector("#conversation");
 const submitButton = form.querySelector("button[type='submit']");
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+const soundToggle = document.querySelector("#sound-toggle");
+let audioContext;
+let soundEnabled = true;
+
+function enableSound() {
+  if (!audioContext) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return false;
+    audioContext = new AudioContext();
+  }
+  if (audioContext.state === "suspended") audioContext.resume();
+  return true;
+}
 
 function playSound(frequencies, duration = 0.1) {
-  if (audioContext.state === "suspended") audioContext.resume();
+  if (!soundEnabled || !enableSound()) return;
   const oscillator = audioContext.createOscillator();
   const gain = audioContext.createGain();
   oscillator.type = "sine";
@@ -23,6 +35,14 @@ function playSound(frequencies, duration = 0.1) {
   oscillator.start();
   oscillator.stop(audioContext.currentTime + duration);
 }
+
+soundToggle.addEventListener("click", () => {
+  soundEnabled = !soundEnabled;
+  if (soundEnabled) enableSound();
+  soundToggle.textContent = soundEnabled ? "🔊 SOUND ON" : "🔇 SOUND OFF";
+  soundToggle.setAttribute("aria-pressed", String(soundEnabled));
+  if (soundEnabled) playSound([587, 784], 0.12);
+});
 
 function addMessage(text, kind) {
   const message = document.createElement("div");
