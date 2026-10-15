@@ -96,10 +96,9 @@ function rotateFunFact() {
   text.textContent = funFacts[funFactIndex][1];
   count.textContent = `${String(funFactIndex + 1).padStart(2, "0")} / ${funFacts.length}`;
   card.classList.add("is-changing");
-  playSound([520, 700], 0.08);
 }
 
-window.setInterval(rotateFunFact, 30000);
+window.setInterval(rotateFunFact, 8000);
 
 function addMessage(text, kind) {
   const message = document.createElement("div");
