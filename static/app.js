@@ -5,6 +5,27 @@ const submitButton = form.querySelector("button[type='submit']");
 const soundToggle = document.querySelector("#sound-toggle");
 let audioContext;
 let soundEnabled = true;
+const funFacts = [
+  ["Make your people", "The best friendships can start with a shared class, a residence corridor, or a simple “want to grab food?”"],
+  ["The syllabus side quest", "A college day can begin with one planned class and somehow unlock three unexpected conversations."],
+  ["Campus compass", "Every student eventually develops a personal map of shortcuts, snack spots, and “meet me here” landmarks."],
+  ["The five-minute friend", "A quick chat before class can become a study partner, a project teammate, or a lifelong friend."],
+  ["Club curiosity", "Trying one new club or event is one of the easiest ways to turn a big campus into a smaller community."],
+  ["Snack science", "Many brilliant campus ideas begin with two ingredients: a deadline and something crunchy."],
+  ["Library magic", "The quietest corner of campus often has the loudest collection of ideas."],
+  ["Group project lore", "Every group project has a planner, a researcher, a designer, and one person who says “I’ll make the slides.”"],
+  ["Rainy-day bonding", "Unexpected weather has a funny way of turning strangers sharing shelter into temporary teammates."],
+  ["The residence network", "A residence hallway can become a mini community powered by borrowed chargers and shared recommendations."],
+  ["Event energy", "The best campus memories are often the ones you almost skipped."],
+  ["Study break rule", "A good study break should refresh your brain, not become a four-hour documentary marathon. Usually."],
+  ["Campus soundtrack", "Every student has a route, a playlist, and a preferred speed for walking to class."],
+  ["Kindness shortcut", "Sharing notes, directions, or a seat can make a new campus feel friendly in seconds."],
+  ["Deadline physics", "The closer the deadline gets, the faster snacks disappear and keyboard sounds multiply."],
+  ["Curiosity wins", "Ask one extra question today. It might lead to a new skill, a new place, or a new friend."],
+  ["Tiny traditions", "The small routines you repeat with friends often become the stories you remember most."],
+  ["Main-character moment", "College is part classroom, part community, and part figuring things out as you go."]
+];
+let funFactIndex = 0;
 
 function enableSound() {
   if (!audioContext) {
@@ -61,6 +82,24 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.12 });
 animatedSections.forEach((element) => revealObserver.observe(element));
+
+function rotateFunFact() {
+  const card = document.querySelector("#fun-fact-card");
+  const title = document.querySelector("#fun-fact-title");
+  const text = document.querySelector("#fun-fact-text");
+  const count = document.querySelector("#fun-fact-count");
+  if (!card || !title || !text || !count) return;
+  funFactIndex = (funFactIndex + 1) % funFacts.length;
+  card.classList.remove("is-changing");
+  void card.offsetWidth;
+  title.textContent = funFacts[funFactIndex][0];
+  text.textContent = funFacts[funFactIndex][1];
+  count.textContent = `${String(funFactIndex + 1).padStart(2, "0")} / ${funFacts.length}`;
+  card.classList.add("is-changing");
+  playSound([520, 700], 0.08);
+}
+
+window.setInterval(rotateFunFact, 30000);
 
 function addMessage(text, kind) {
   const message = document.createElement("div");
