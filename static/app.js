@@ -20,7 +20,7 @@ function playSound(frequencies, duration = 0.1) {
   if (!soundEnabled || !enableSound()) return;
   const oscillator = audioContext.createOscillator();
   const gain = audioContext.createGain();
-  oscillator.type = "sine";
+  oscillator.type = "square";
   oscillator.frequency.setValueAtTime(frequencies[0], audioContext.currentTime);
   frequencies.slice(1).forEach((frequency, index) => {
     oscillator.frequency.setValueAtTime(
@@ -28,7 +28,7 @@ function playSound(frequencies, duration = 0.1) {
       audioContext.currentTime + (duration / frequencies.length) * (index + 1),
     );
   });
-  gain.gain.setValueAtTime(0.08, audioContext.currentTime);
+  gain.gain.setValueAtTime(0.2, audioContext.currentTime);
   gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
   oscillator.connect(gain);
   gain.connect(audioContext.destination);
