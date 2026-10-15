@@ -1,0 +1,6 @@
+Flask>=3.1
+scikit-learn>=1.8
+pypdf>=6.0
+requests>=2.32
+chromadb>=1.5
+gunicorn>=23.0; platform_system != "Windows"

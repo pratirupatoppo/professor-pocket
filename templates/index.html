@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Professor Pocket | Smart Campus Assistant</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon" aria-hidden="true">▣</div>
+      <div>
+        <strong>PROFESSOR POCKET</strong>
+        <span>Campus SLM assistant</span>
+      </div>
+    </div>
+    <div class="top-status"><span class="status-dot"></span> LOCAL MODE · ONLINE</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-art" aria-hidden="true">
+        <div class="antenna"></div>
+        <div class="antenna-light"></div>
+        <div class="robot-head"><span></span><span></span></div>
+        <div class="robot-body">POCKET</div>
+        <i class="star star-one">✦</i><i class="star star-two">✦</i>
+      </div>
+      <div class="hero-copy">
+        <p class="kicker">⚡ EDGE AI PROTOTYPE</p>
+        <h1>YOUR CAMPUS<br><em>IN YOUR POCKET.</em></h1>
+        <p class="hero-text">A private, local AI guide for verified academic, residence, and campus policies. Ask a question and get a clear answer grounded in the university documents.</p>
+        <div class="hero-pills">
+          <span>⚡ Local inference</span><span>🔒 Private by design</span><span>🧠 574 policy chunks</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="ticker" aria-hidden="true"><span>🤖 PROFESSOR POCKET · SMART CAMPUS BOT</span><span>⚡ SMALL LANGUAGE MODEL</span><span>📚 VERIFIED POLICY SEARCH</span><span>🔒 LOCAL-FIRST AI</span><span>🤖 PROFESSOR POCKET · SMART CAMPUS BOT</span></div>
+
+    <section class="assistant-section" id="campusHub">
+      <div class="section-heading">
+        <div>
+          <p class="kicker pink">CAMPUS KNOWLEDGE HUB</p>
+          <h2>WHAT DO YOU<br>WANT TO KNOW?</h2>
+        </div>
+        <span class="section-badge">RAG + SLM<br><b>READY</b></span>
+      </div>
+      <div class="chat-card">
+        <div class="chat-header">
+          <div><span class="status-dot green"></span><strong>LIVE CAMPUS ASSISTANT</strong></div>
+          <span class="model-badge">QWEN 1.5B · LOCAL</span>
+        </div>
+        <section id="conversation" class="conversation" aria-live="polite">
+          <div class="message assistant"><b>🤖 PROFESSOR POCKET</b><br>Hey! Ask me about attendance, examinations, residence rules, fees, or student services.</div>
+        </section>
+        <div class="suggestions">
+          <button type="button" data-question="What are the residence leave procedures?">🏠 Residence leave</button>
+          <button type="button" data-question="What is the minimum attendance required for the end-semester examination?">📚 Attendance rule</button>
+          <button type="button" data-question="What are the UG residence meal timings?">🍽 Meal timings</button>
+        </div>
+        <form id="chat-form">
+          <input id="question" type="text" placeholder="Type a question for Professor Pocket..." autocomplete="off" required>
+          <button type="submit">ASK ⚡</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="specs">
+      <div class="specs-copy">
+        <p class="kicker yellow">THE TECH BEHIND THE BOT</p>
+        <h2>SMALL MODEL.<br><em>BIG HELP.</em></h2>
+        <p>Professor Pocket searches official campus documents first, then uses a local Small Language Model to explain the relevant rule in plain language.</p>
+      </div>
+      <div class="spec-grid">
+        <div><strong>574</strong><span>processed<br>policy chunks</span></div>
+        <div><strong>100%</strong><span>source recall<br>in evaluation</span></div>
+        <div><strong>LOCAL</strong><span>Ollama-powered<br>inference</span></div>
+        <div><strong>RAG</strong><span>retrieval<br>grounded</span></div>
+      </div>
+    </section>
+  </main>
+  <footer>SMART CAMPUS INFORMATION ASSISTANT <span>MADE FOR THE CAMPUS, NOT THE CLOUD.</span></footer>
+  <span class="sr-only">Smart Campus Information Assistant</span>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
