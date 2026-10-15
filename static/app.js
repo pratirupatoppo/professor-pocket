@@ -57,12 +57,6 @@ function playSound(frequencies, duration = 0.1) {
   oscillator.stop(audioContext.currentTime + duration);
 }
 
-document.querySelectorAll("button").forEach((button) => {
-  if (button !== soundToggle) {
-    button.addEventListener("click", () => playSound([520, 700], 0.07));
-  }
-});
-
 soundToggle.addEventListener("click", () => {
   soundEnabled = !soundEnabled;
   if (soundEnabled) enableSound();
