@@ -87,14 +87,12 @@ function rotateFunFact() {
   const card = document.querySelector("#fun-fact-card");
   const title = document.querySelector("#fun-fact-title");
   const text = document.querySelector("#fun-fact-text");
-  const count = document.querySelector("#fun-fact-count");
-  if (!card || !title || !text || !count) return;
+  if (!card || !title || !text) return;
   funFactIndex = (funFactIndex + 1) % funFacts.length;
   card.classList.remove("is-changing");
   void card.offsetWidth;
   title.textContent = funFacts[funFactIndex][0];
   text.textContent = funFacts[funFactIndex][1];
-  count.textContent = `${String(funFactIndex + 1).padStart(2, "0")} / ${funFacts.length}`;
   card.classList.add("is-changing");
 }
 
